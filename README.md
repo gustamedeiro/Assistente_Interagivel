@@ -151,29 +151,105 @@ Saída sonora: Ativa o buzzer para fornecer feedback sonoro ao usuário, reforç
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
-Inicialização:
+## Inicialização:
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
---------------------------------------------------------------------------------------------------------------------------------------------------------
-Configurações dos registros: A configuração dos registros será feita para controlar a matriz de LEDs e os botões.
---------------------------------------------------------------------------------------------------------------------------------------------------------
+## Configurações dos registros: 
+Para garantir o funcionamento adequado dos periféricos utilizados no projeto, os registradores do RP2040 são configurados conforme as necessidades de cada componente:
 
---------------------------------------------------------------------------------------------------------------------------------------------------------
+Configuração dos GPIOs (Entradas e Saídas)--> Os botões (GPIO5, GPIO6 e GPIO22) são configurados como entradas com pull-up interno para detectar pressões. Isso é feito ativando os registradores de controle do GPIO (SIO).
+A matriz de LEDs (GPIO7) e os buzzers (GPIO21 e GPIO10) são configurados como saídas digitais para permitir o controle do assistente emocional.
+
+Configuração do PWM para o Buzzer--> Os pinos GPIO21 e GPIO10 utilizam PWM para gerar tons sonoros. Para isso, os registradores PWM_CHx_CSR (Control and Status Register) são configurados, ativando o modo PWM e ajustando a frequência do sinal.
+
+Configuração do I2C para o Display OLED --> A comunicação com o display OLED ocorre por meio do barramento I2C, utilizando os pinos GPIO14 (SDA) e GPIO15 (SCL). Esses pinos são configurados com a função I2C ajustando os registradores I2C_CTRL (I2C Control Register), garantindo uma taxa de comunicação eficiente.
+
+Configuração dos Temporizadores Internos --> Para monitorar o tempo sem interação e alterar o estado emocional do assistente, são utilizados temporizadores internos do RP2040. Os registradores correspondentes são ajustados para gerar interrupções em intervalos regulares, garantindo que o estado emocional mude dinamicamente.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
 Estrutura e formato dos dados: O código usará matrizes para representar as expressões faciais na matriz de LEDs.
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
---------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Metodologia 
---------------------------------------------------------------------------------------------------------------------------------------------------------
+O desenvolvimento do assistente emocional foi realizado seguindo um conjunto de etapas organizadas para garantir um funcionamento eficiente e previsível. A abordagem adotada seguiu um fluxo estruturado, conforme descrito abaixo:
 
---------------------------------------------------------------------------------------------------------------------------------------------------------
-Testes de validação: O sistema foi testado para garantir que as emoções sejam exibidas corretamente e que os botões funcionem conforme esperado.
---------------------------------------------------------------------------------------------------------------------------------------------------------
+PESQUISA INICIAL
+Antes do desenvolvimento, foi realizada uma pesquisa sobre projetos similares que utilizam expressões faciais em matrizes de LEDs e interação com botões. Além disso, foram analisadas as capacidades da placa BitDogLab RP2040, seus periféricos e protocolos suportados, como GPIO, PWM e I2C. Essa etapa foi essencial para entender as limitações e possibilidades do hardware disponível.
 
---------------------------------------------------------------------------------------------------------------------------------------------------------
-Discussão dos Resultados:
---------------------------------------------------------------------------------------------------------------------------------------------------------
+DEFINIÇÃO DAS FUNCIONALIDADES
+Com base na pesquisa, foi elaborado um escopo detalhado das funcionalidades do assistente. A lógica de mudança emocional foi planejada, considerando os diferentes estados emocionais e as condições que os ativam. Foram estabelecidos os seguintes pontos principais:
+Quais botões afetariam cada estado emocional.
+Como a matriz de LEDs exibiria as expressões faciais.
+O uso do display OLED para exibir mensagens relacionadas às emoções.
+O acionamento do buzzer em situações específicas, como alertas e reações.
+Configuração do ambiente de desenvolvimento no Wokwi
+O Wokwi, um simulador de hardware embarcado, foi escolhido para a prototipagem inicial. 
+Nele, foram adicionados os componentes necessários:
+Matriz de LEDs 5x5 para exibir expressões faciais.
+Botões físicos para permitir a interação do usuário.
+Display OLED via comunicação I2C.
+Buzzer controlado por PWM.
+RP2040 como unidade central de controle.
+Essa configuração permitiu testar o comportamento do sistema sem a necessidade imediata de hardware físico.
 
---------------------------------------------------------------------------------------------------------------------------------------------------------
+IMPLEMENTAÇÃO DO FIRMWARE 
+O código foi escrito em C, utilizando as bibliotecas adequadas para a BitDogLab RP2040. Foram desenvolvidos os seguintes módulos principais:
+Gerenciamento de estados emocionais: lógica para mudar entre "feliz", "triste" e "irritado".
+Leitura dos botões com interrupções: para detectar interações do usuário de forma eficiente.
+Controle da matriz de LEDs: exibição de diferentes expressões faciais conforme o estado emocional.
+Exibição de mensagens no display OLED: comunicação via I2C para mostrar respostas do assistente.
+Acionamento do buzzer: geração de sons conforme a emoção do assistente.
+
+TESTES E AJUSTES 
+Após a implementação, foram realizados testes para validar a resposta do sistema. Os principais testes incluíram:
+Pressionamento dos botões para verificar se as emoções mudam corretamente.
+Tempo sem interação para testar se o assistente muda para o estado "triste" automaticamente.
+Exibição correta das expressões faciais na matriz de LEDs.
+Comunicação I2C funcional para exibir mensagens no display OLED.
+Teste do buzzer para garantir que os sons indicam corretamente as emoções e alertas.
+Com base nos testes, pequenos ajustes foram feitos para otimizar a responsividade dos botões e melhorar a suavidade da transição entre estados emocionais.
+
+## Testes de validação
+Os testes foram conduzidos para garantir que cada componente do sistema funcionasse conforme esperado e que o assistente emocional interativo respondesse corretamente às interações do usuário. As validações foram realizadas individualmente para cada módulo e, posteriormente, de forma integrada.
+
+Verificação da Matriz de LEDs 5x5
+Objetivo: Confirmar que as expressões faciais mudam corretamente conforme o estado emocional do assistente.
+Procedimento: Teste inicial com a matriz de LEDs exibindo o rosto "feliz" ao ligar o sistema.
+Pressionamento dos botões para alterar o estado emocional e observar as mudanças visuais na matriz.
+Simulação de falta de interação para verificar a transição automática para o estado "triste".
+Teste de múltiplos pressionamentos rápidos para simular o estado de "irritação".
+Resultado esperado: A matriz de LEDs exibe expressões correspondentes aos estados emocionais do assistente.
+
+Respostas aos Botões
+Objetivo: Garantir que os botões alterem o estado emocional conforme projetado.
+Procedimento: Pressionar o botão 1 e verificar se a resposta do assistente corresponde ao estado emocional esperado.
+Pressionar o botão 2 para testar a exibição da resposta no display OLED e a mudança no rosto do assistente.
+Pressionar repetidamente os botões para observar mudanças de estado e garantir que o assistente não entre em loops inesperados.
+Testar o botão 3 (do joystick) para resetar o estado emocional para "feliz".
+Resultado esperado: O assistente responde corretamente a cada botão, mudando expressões e mensagens de forma apropriada.
+
+Interação com o Buzzer
+Objetivo: Validar que o buzzer é acionado corretamente conforme as interações do usuário.
+Procedimento: Pressionar um botão e verificar se há um alerta sonoro quando necessário.
+Simular "cócegas" repetidas para garantir que o buzzer emita um alerta de sobrecarga.
+Monitorar se há variações na frequência dos sons gerados conforme o estado emocional muda.
+Resultado esperado: O buzzer responde de maneira apropriada às interações, emitindo alertas sonoros quando necessário.
+
+Monitoramento do Tempo sem Interação
+Objetivo: Testar se o assistente altera seu estado emocional de forma autônoma quando não há interação por um período prolongado.
+Procedimento: Inicializar o sistema e aguardar sem pressionar nenhum botão.
+Observar se, após um tempo pré-definido, o assistente muda para um estado "triste".
+Verificar se, ao interagir novamente, o assistente retorna ao estado "feliz".
+Resultado esperado: O assistente se torna "triste" após um período de inatividade e retorna ao normal ao receber interações.
+
+
+## Discussão dos Resultados:
+Os testes mostraram que o sistema responde bem às interações do usuário. O assistente consegue alterar seu estado emocional dinamicamente e oferece um retorno visual e sonoro eficaz. Pequenos ajustes foram feitos para melhorar a responsividade dos botões e a suavidade da mudança de emoções
+
 ## Referências
---------------------------------------------------------------------------------------------------------------------------------------------------------
+RASPBERRY PI. RP2040 Datasheet. Disponível em: https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf. Acesso em: 18 fev. 2025.
+BITDOGLAB. Documentação técnica da placa BitDogLab RP2040. Disponível em: https://github.com/BitDogLab/BitDogLab. Acesso em: 18 fev. 2025.
+ADAFRUIT INDUSTRIES. Adafruit SSD1306 Library. Disponível em: https://github.com/adafruit/Adafruit_SSD1306. Acesso em: 20 fev. 2025.
+WOKWI. Simulador Online para RP2040. Disponível em: https://wokwi.com. Acesso em: 20 fev. 2025.
+ARTIGOS SOBRE EXPRESSÕES FACIAIS EM MATRIZES DE LED: Estudos indicam que expressões simplificadas podem ser eficazmente representadas com pequenos conjuntos de LEDs, melhorando a interação humano-máquina.
+PROJETOS SIMILARES: Análise de dispositivos interativos utilizando LEDs para exibição de estados emocionais em ambientes educacionais e robóticos. Pesquisa feita em: 17 fev. 2025

@@ -107,7 +107,7 @@ A matriz de LEDs controlada com um único pino que é a GPIO 7.
 Os botões são conectados a outros pinos, são eles: 
 GPIO 5 (Push botton A), GPIO 6 (Push botton B), GPIO 22 (Joystick Push botton).
 
-Os buzzers A e o buzzer B conectados, respectivamente, as GPIO 21 e GPIO 10. 
+O buzzer A e o buzzer B conectados, respectivamente, as GPIO 21 e GPIO 10. 
 
 Display OLED conectado na GPIO 14 (SDA) e GPIO 15 (SCL)
 __________________________

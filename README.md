@@ -251,5 +251,6 @@ RASPBERRY PI. RP2040 Datasheet. Disponível em: https://datasheets.raspberrypi.c
 BITDOGLAB. Documentação técnica da placa BitDogLab RP2040. Disponível em: https://github.com/BitDogLab/BitDogLab. Acesso em: 18 fev. 2025.
 ADAFRUIT INDUSTRIES. Adafruit SSD1306 Library. Disponível em: https://github.com/adafruit/Adafruit_SSD1306. Acesso em: 20 fev. 2025.
 WOKWI. Simulador Online para RP2040. Disponível em: https://wokwi.com. Acesso em: 20 fev. 2025.
-ARTIGOS SOBRE EXPRESSÕES FACIAIS EM MATRIZES DE LED: Estudos indicam que expressões simplificadas podem ser eficazmente representadas com pequenos conjuntos de LEDs, melhorando a interação humano-máquina.  
-PROJETOS SIMILARES: Análise de dispositivos interativos utilizando LEDs para exibição de estados emocionais em ambientes educacionais e robóticos. Pesquisa feita em: 17 fev. 2025
+ARTIGOS SOBRE EXPRESSÕES FACIAIS EM MATRIZES DE LED: Estudos indicam que expressões simplificadas podem ser eficazmente representadas com pequenos conjuntos de LEDs, melhorando a interação humano-máquina. 
+SANTIAGO, Hemir da Cunha. "Reconhecimento de Expressões Faciais." Tese de Doutorado, Universidade Federal de Pernambuco, 2017. Disponível em: https://repositorio.ufpe.br/bitstream/123456789/24892/1/TESE%20Hemir%20da%20Cunha%20Santiago.pdf. Acesso em 18 fev. 2025.
+PROJETOS SIMILARES: Análise de dispositivos interativos utilizando LEDs para exibição de estados emocionais em ambientes educacionais e robóticos. Pesquisa feita em: 17 fev. 2025.

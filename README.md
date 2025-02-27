@@ -1,5 +1,8 @@
 # Relatório do Projeto:
 
+link para o vídeo: https://youtu.be/FIkBLaZYSzs?si=SxsB7_rLq25vfKKP
+
+
 ## Apresentação
 
 Este projeto visa criar um assistente virtual interativo usando a placa BitDogLab RP2040, controlando uma matriz de LEDs 5x5 para representar as emoções do assistente. O assistente recebe mensagens do usuário através dos botões e as emoções podem ser alteradas com o (ou o não) pressionamento, e o assistente também emite sons via buzzer para alertar ou responder ao usuário, e mostra mensagens através do Display OLED.
@@ -503,12 +506,16 @@ Verificar se, ao interagir novamente, o assistente retorna ao estado "feliz".
 
 Resultado esperado: O assistente se torna "triste" após um período de inatividade e retorna ao normal ao receber interações.
 
+Os testes individuais de cada componente do sistema, como a matriz de LEDs, o display OLED, os botões e o buzzer, foram realizados com sucesso, e os periféricos responderam conforme o esperado. No entanto, quando tentamos integrar todos os componentes e implementar o código completo do assistente, não foi possível alcançar o resultado esperado. Embora cada parte do sistema tenha funcionado isoladamente,
+
+Especificamente, ao tentar integrar as interações dos botões com a mudança de estados emocionais e a comunicação com os periféricos, surgiram problemas de sincronização e comunicação. A placa não respondeu corretamente ao código completo, e o assistente não se comportou como deveria, com falhas nas transições de estado e no controle dos componentes. O sistema parecia não conseguir lidar com esse comportamento
+
 
 ## Discussão dos Resultados:
 
-Os testes mostraram que o sistema responde bem às interações do usuário. O assistente consegue alterar seu estado emocional dinamicamente e oferece um retorno visual e sonoro eficaz. 
+Ao tentar gerar o código na placa, infelizmente, encontramos dificuldades que impedem a execução bem-sucedida do sistema. Durante os testes, a placa não respondeu como esperado, comprometendo o uso do destinatário. A comunicação com os periféricos, como a matriz de LEDs e o display OLED, não ocorreu de forma estável, e os botões não geraram as respostas previstas. Esse comportamento sugere que pode haver problemas na inicialização do sistema, configuração de I2C ou GPIOs, ou até mesmo conflitos na execução do firmware, ou que precisa ser investigado mais a fundo.
+Em algumas tentativas, o assistente iniciou, mas a resposta visual ou sonora foi intermitente, o que indica que a interação entre o código e os componentes da placa não está sendo realizada corretamente. O próximo passo será revisar a configuração dos periféricos e testar a comunicação entre a placa e cada um deles de forma isolada, além de realizar a depuração do código para identificar possíveis falhas na execução ou na atribuição de pinos.
 
-Pequenos ajustes foram feitos para melhorar a responsividade dos botões e a suavidade da mudança de emoções
 
 ## Referências
 

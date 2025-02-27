@@ -1,0 +1,34 @@
+# wokwi.toml for your project
+
+[wokwi]
+name = "Assistente Virtual"
+board = "raspberry-pi-pico-w"
+framework = "pico-sdk"
+
+# Specify the version of the SDK you want to use
+sdk_version = "1.4.0"
+
+# Optional: add some description about the project
+description = "Projeto de assistente virtual com Raspberry Pi Pico W"
+
+# Set the platform and build tool
+platform = "raspberry-pi-pico-w"
+build_tool = "cmake"
+
+# Optional: You can specify the upload tool if needed
+upload_tool = "openocd"
+
+# Pin configuration for the components
+[components]
+oled = { type = "ssd1306", pin_sda = 14, pin_scl = 15, address = "0x3C" }
+ws2812 = { type = "ws2812", pin = 7, led_count = 1 }
+
+# GPIO for buttons and buzzer
+[buttons]
+button1 = { pin = 5 }
+button2 = { pin = 6 }
+button3 = { pin = 22 }
+
+[buzzers]
+buzzer1 = { pin = 21 }
+buzzer2 = { pin = 10 }
